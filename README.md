@@ -1,3 +1,3 @@
 # Command
-I Have no idea what i'm doing
+I have no idea what i'm doing
 
