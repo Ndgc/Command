@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="SDL" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/SDL" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="include" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/SDL" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add directory="E:/libraries/SDL2-2.0.4/i686-w64-mingw32/include/SDL2" />
+		</Compiler>
+		<Linker>
+			<Add option="-lmingw32 -lSDL2main -lSDL2" />
+			<Add directory="E:/libraries/SDL2-2.0.4/i686-w64-mingw32/lib" />
+		</Linker>
+		<Unit filename="Main.cpp" />
+		<Unit filename="include/Commander.h" />
+		<Unit filename="include/Soldier.h" />
+		<Unit filename="include/State.h" />
+		<Unit filename="include/Target.h" />
+		<Unit filename="include/shape.h" />
+		<Unit filename="include/timer.h" />
+		<Unit filename="src/Commander.cpp" />
+		<Unit filename="src/Soldier.cpp" />
+		<Unit filename="src/State.cpp" />
+		<Unit filename="src/Target.cpp" />
+		<Unit filename="src/shape.cpp" />
+		<Unit filename="src/timer.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
