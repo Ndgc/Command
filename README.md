@@ -1,2 +1,3 @@
 # Command
-I DON'T KNOW WHAT I'M DOING!
+I Have no idea what i'm doing
+
