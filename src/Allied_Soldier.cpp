@@ -98,7 +98,6 @@ idlecooldown+=actionspeed;
 if (idlecooldown>1000)
 {
 //reset cooldown if no enemies exist
-std::cout<<s->enemies.size();
 if (s->enemies.size()==0)
 {
     idlecooldown=0;
