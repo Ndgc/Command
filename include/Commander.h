@@ -2,9 +2,10 @@
 #define COMMANDER_H
 
 #include <State.h>
-#include <Soldier.h>
+#include <Allied_Soldier.h>
 #include <Target.h>
-#include <list>
+#include <map>
+#include "SDL.h"
 
 class Commander : public State
 {
@@ -15,11 +16,13 @@ class Commander : public State
         bool event(SDL_Event e);
         bool draw(SDL_Renderer* r);
 
+        std::map<unsigned int,Target> enemies;
     protected:
         SDL_Renderer* renderer;
-        std::list<Target> enemies;
-        std::list<Soldier> units;
-        std::list<Soldier>::iterator SelUnit;
+
+        std::map<unsigned int,Allied_Soldier> units;
+        unsigned int SelUnit;
+        unsigned int nextid;
     private:
 };
 

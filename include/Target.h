@@ -2,17 +2,18 @@
 #define TARGET_H
 #include <SDL.h>
 #include <iostream>
-#include "shape.h"
+#include "Base_Soldier.h"
 
-class Target : public shape
+class Target: public Base_Soldier
 {
     public:
-        Target(int x, int y, SDL_Renderer *ren);
+        Target(unsigned int id,int x, int y, SDL_Renderer *ren);
         virtual ~Target();
+        void createIcon(SDL_Renderer *ren);
         bool update();
-        float getX();
-        float getY();
+        bool update_movement();
     protected:
+
 
     private:
 

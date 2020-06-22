@@ -50,7 +50,7 @@ int main( int argc, char* args[] )
 		else
 		{
             //create renderer, and paint it a funny colour, so later failure states don't just leave a black screen.
-            ren= SDL_CreateRenderer(win,-1,SDL_RENDERER_ACCELERATED);
+            ren= SDL_CreateRenderer(win,-1,0);
             SDL_SetRenderDrawColor(ren,0,255,100,0);
             SDL_RenderClear(ren);
             SDL_RenderPresent(ren);
@@ -60,7 +60,7 @@ int main( int argc, char* args[] )
 
 	//Game state. Commander is the actual game.
 	s=new Commander(ren);
-	//this exits the game, figure it's easier to make it something i can't easily code around.
+	//this exits the game, figure it's easier to make it something i can't easily code around by accident.
     bool quit=false;
     SDL_Event e;
     //frame timer, limits frames

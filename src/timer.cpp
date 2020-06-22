@@ -22,6 +22,5 @@ int timer::GetTime()
 
 int timer::GetRemaining()
 {
-    return period-(SDL_GetTicks()-StartTime)
-    ;
+    return period-(SDL_GetTicks()-StartTime);
 }

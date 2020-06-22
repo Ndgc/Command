@@ -19,7 +19,7 @@ State::~State()
 bool State::update()
 {
 
-
+return true;
 }
 
 //In an actual game, this would handle rendering. The argument is so it can draw on something.
