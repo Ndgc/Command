@@ -9,13 +9,10 @@ Commander::Commander(SDL_Renderer* ren)
     //this is probably bad. Holding onto it for unit constructurs.
     renderer=ren;
 
-    //add one friendly unit, and one enemy unit, and select the new friendly.
-    units.insert(std::pair<unsigned int,Allied_Soldier>(nextid,Allied_Soldier(nextid,200,200,ren)));
-    SelUnit=nextid;
-    nextid++;
+    //add one friendly unit
+    create_ally(Allied_Soldier(nextid,200,200,ren));
+    create_ally(Allied_Soldier(nextid,430,200,ren));
 
-    enemies.insert(std::pair<unsigned int,Target>(nextid,Target(nextid,320,100,ren)));
-    nextid++;
 }
 
 Commander::~Commander()
@@ -30,6 +27,8 @@ bool Commander::update()
 //declare iterators
 std::map<unsigned int,Allied_Soldier>::iterator unit=units.begin();
 std::map<unsigned int,Target>::iterator enemy=enemies.begin();
+//update the wave control
+WaveControl.update();
 //update friendlies
 while (unit!=units.end())
 {
@@ -42,6 +41,7 @@ while (enemy!=enemies.end())
         enemy->second.update();
         enemy++;
 }
+
 
 
 
@@ -129,7 +129,6 @@ while (enemy!=enemies.end())
 }
 
 //draw a small HUD at the bottom, showing the selected unit.
-
 //draw the HUD backdrop
 SDL_Rect HUDArea={0,460,640,20};
 SDL_SetRenderDrawColor(r,255,0,0,0);
@@ -137,6 +136,28 @@ SDL_RenderFillRect(r,&HUDArea);
 //draw the unit icon.
 HUDArea={0,460,20,20};
 SDL_RenderCopy(r,units.find(SelUnit)->second.getIcon(),NULL,&HUDArea);
+
+//draw progress to next wave
+int width=640*WaveControl.wave_progress();
+
+HUDArea={0,0,width,10};
+SDL_SetRenderDrawColor(r,255,0,0,0);
+SDL_RenderFillRect(r,&HUDArea);
+
+//commit rendering
 SDL_RenderPresent(r);
 return true;
+}
+
+
+bool Commander::create_ally(Allied_Soldier new_ally)
+{
+    units.insert(std::pair<unsigned int,Allied_Soldier>(nextid,new_ally));
+    nextid++;
+}
+
+bool Commander::create_enemy (Target new_enemy)
+{
+    enemies.insert(std::pair<unsigned int,Target>(nextid,new_enemy));
+    nextid++;
 }
