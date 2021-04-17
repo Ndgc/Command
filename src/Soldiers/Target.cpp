@@ -1,18 +1,15 @@
 //generic enemy target. Can't move, can't shoot, can't even die yet. Exists to be targeted.
 //should probably inherit from an entity class shared with Soldier that implements stuff like drawing and position.
 
-#include "Target.h"
+#include "Soldiers\Target.h"
+#include "Commander.h"
 #include <stdlib.h>
 
-Target::Target(unsigned int key,int xVal, int yVal, SDL_Renderer *ren)
+Target::Target(int xVal, int yVal)
 {
-    id=key;
     //position
     x=xVal;
     y=yVal;
-
-    //create a texture, but a different colour range to the friendlies.
-    createIcon(ren);
 
     dead=false;
 }
@@ -21,8 +18,10 @@ Target::~Target()
 {
 
 }
-void Target::createIcon(SDL_Renderer* ren)
+void Target::createIcon()
 {
+    extern Commander* s;
+    SDL_Renderer* ren=s->getRenderer();
         Uint32 rmask, gmask, bmask, amask;
 
     #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -44,29 +43,36 @@ void Target::createIcon(SDL_Renderer* ren)
         printf("CreateRGBSurface failed: %s\n", SDL_GetError());
     }
 
-    SDL_FillRect(Sketch,NULL,SDL_MapRGB(Sketch->format,rand()%255,200,rand()%255));
+    SDL_FillRect(Sketch,NULL,SDL_MapRGB(Sketch->format,100+rand()%105,20,rand()%20));
     Icon=SDL_CreateTextureFromSurface(ren,Sketch);
     if (Icon == NULL) {
         printf("CreateTextureFromSurface failed: %s\n", SDL_GetError());
 
     }
     SDL_FreeSurface(Sketch);
-
-    int w, h;
-    SDL_QueryTexture(Icon, NULL, NULL, &w, &h);
-    std::cout<<"Texture created :" << Icon<<std::endl<<w<<","<<h<<std::endl;
 }
 
 bool Target::update()
 {
     update_movement();
+    return true;
 }
 
 bool Target::update_movement()
 {
+    extern Commander* s;
     y+=get_movementspeed();
     //advance if you've reached the end
-    if (y>=480) advance();
+    if (y>=s->get_battlefield_height()) advance();
+    return true;
+}
+
+bool Target::advance()
+{
+    extern Commander* s;
+    s->lose_lives(1);
+    advanced=true;
+    return true;
 }
 
 

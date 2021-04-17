@@ -6,7 +6,8 @@ WaveController::WaveController()
 {
     //ctor
     wavetime=0;
-    wavethreshold=500;
+    wavethreshold=1000;
+    wavenumber=0;
 }
 
 WaveController::~WaveController()
@@ -20,16 +21,33 @@ bool WaveController::update()
 
     if (wavetime>wavethreshold)
     {
-        extern Commander* s;
-        s->create_enemy(Target(s->getnextid(),rand()%640,0,s->getRenderer()));
-        s->create_enemy(Target(s->getnextid(),rand()%640,0,s->getRenderer()));
-        s->create_enemy(Target(s->getnextid(),rand()%640,0,s->getRenderer()));
-        wavetime=0;
+        next_wave();
     }
+    return true;
+}
+
+bool WaveController::next_wave()
+{
+         wavenumber++;
+        extern Commander* s;
+        s->give_resource_points(1);
+
+        for (int i=0; i<((wavenumber/3)+1);i++)
+        {
+                s->create_enemy(std::make_shared<Target>(rand()%s->get_battlefield_width(),0));
+        }
+
+        wavetime=0;
+        return true;
 }
 
 float WaveController::wave_progress()
 {
 
     return (float)wavetime/wavethreshold;
+}
+
+int WaveController::getwavenumber()
+{
+    return wavenumber;
 }

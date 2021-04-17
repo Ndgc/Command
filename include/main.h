@@ -1,8 +1,0 @@
-#ifndef MAIN_H_INCLUDED
-#define MAIN_H_INCLUDED
-
-int GET_SCREEN_HEIGHT();
-int GET_SCREEN_WIDTH();
-
-
-#endif // MAIN_H_INCLUDED

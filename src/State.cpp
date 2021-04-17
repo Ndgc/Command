@@ -14,6 +14,11 @@ State::~State()
 {
     //dtor
 }
+//In an actual game, this handles self-referential things.
+bool State::postinit()
+{
+    return true;
+}
 
 //In an actual game this would handle logic.
 bool State::update()
@@ -29,10 +34,11 @@ bool State::draw(SDL_Renderer* r)
             SDL_SetRenderDrawColor(r,0,rand()%255,100,0);
             SDL_RenderClear(r);
             SDL_RenderPresent(r);
+            return true;
 }
 
 //in an actual game this is an SDL Event handler
 bool State::event(SDL_Event e)
 {
-
+    return true;
 }

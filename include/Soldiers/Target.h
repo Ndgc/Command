@@ -7,11 +7,12 @@
 class Target: public Base_Soldier
 {
     public:
-        Target(unsigned int id,int x, int y, SDL_Renderer *ren);
+        Target(int x, int y);
         virtual ~Target();
-        void createIcon(SDL_Renderer *ren);
+        void createIcon();
         bool update();
         bool update_movement();
+        bool advance();
     protected:
 
 

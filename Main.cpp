@@ -8,8 +8,8 @@
 #include <iostream>
 #include <time.h>
 //Screen constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
 const int FPS=60;
 
 //Game Window
@@ -41,6 +41,8 @@ int main( int argc, char* args[] )
 	}
 	else
 	{
+	    //init SDL_TTF
+        TTF_Init();
 		//Create window
 		win = SDL_CreateWindow( "SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
 		if( win == NULL )
@@ -60,6 +62,7 @@ int main( int argc, char* args[] )
 
 	//Game state. Commander is the actual game.
 	s=new Commander(ren);
+    s->postinit();
 	//this exits the game, figure it's easier to make it something i can't easily code around by accident.
     bool quit=false;
     SDL_Event e;
@@ -96,6 +99,7 @@ int main( int argc, char* args[] )
 	SDL_DestroyWindow(win);
 
 	//Quit SDL
+	TTF_Quit();
 	SDL_Quit();
 
 	return 0;

@@ -1,14 +1,16 @@
 //Friendly soldiers. Can be ordered around.
 
-#include "Allied_Soldier.h"
+#include "Soldiers\Allied_Soldier.h"
 #include "Commander.h"
+#include <math.h>
+
+#include <Weapons\shotgun.h>
 
 
 
 
-Allied_Soldier::Allied_Soldier(unsigned int key,float x, float y,SDL_Renderer* ren)
+Allied_Soldier::Allied_Soldier(float x, float y,std::shared_ptr<weapon>gun)
 {
-    id=key;
     //Set position, and target.
     this->x=x;
     this->y=y;
@@ -16,8 +18,30 @@ Allied_Soldier::Allied_Soldier(unsigned int key,float x, float y,SDL_Renderer* r
     movetoy=y;
     w=10;
     h=10;
-    createIcon(ren);
-    SDL_RenderCopy(ren,getIcon(),NULL,NULL);
+
+    currentstate=AI_State::idle;
+    aimcooldown=0;
+    idlecooldown=0;
+    actionspeed=10;
+    health=75;
+
+    if (gun==NULL)
+    {
+        if (rand()%2==0)
+        {
+            unit_weapon=std::make_shared<shotgun>();
+        }
+        else
+        {
+            unit_weapon=std::make_shared<weapon>();
+        }
+    }
+    else
+    {
+        unit_weapon=gun;
+    }
+
+
 }
 
 Allied_Soldier::~Allied_Soldier()
@@ -25,8 +49,11 @@ Allied_Soldier::~Allied_Soldier()
     //SDL_DestroyTexture(Icon);
 }
 
-void Allied_Soldier::createIcon(SDL_Renderer* ren)
+void Allied_Soldier::createIcon()
 {
+    extern Commander* s;
+    SDL_Renderer* ren=s->getRenderer();
+
         Uint32 rmask, gmask, bmask, amask;
 
     #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -48,22 +75,13 @@ void Allied_Soldier::createIcon(SDL_Renderer* ren)
         printf("CreateRGBSurface failed: %s\n", SDL_GetError());
     }
 
-    SDL_FillRect(Sketch,NULL,SDL_MapRGB(Sketch->format,20,rand()%255,rand()%255));
+    SDL_FillRect(Sketch,NULL,SDL_MapRGB(Sketch->format,20,150+rand()%105,20));
     Icon=SDL_CreateTextureFromSurface(ren,Sketch);
     if (Icon == NULL) {
         printf("CreateTextureFromSurface failed: %s\n", SDL_GetError());
 
     }
     SDL_FreeSurface(Sketch);
-
-    int w, h;
-    SDL_QueryTexture(Icon, NULL, NULL, &w, &h);
-    std::cout<<"Texture created :" << Icon<<std::endl<<w<<","<<h<<std::endl;
-
-    currentstate=idle;
-    aimcooldown=0;
-    idlecooldown=0;
-    actionspeed=10;
 
 }
 
@@ -72,7 +90,7 @@ bool Allied_Soldier::moveto(float a, float b)
 {
     movetox=a;
     movetoy=b;
-    currentstate=movement;
+    currentstate=AI_State::movement;
     return true;
 }
 
@@ -81,9 +99,9 @@ bool Allied_Soldier::moveto(float a, float b)
 bool Allied_Soldier::update()
 {
 
-if (currentstate==movement) update_movement();
-if (currentstate==idle) update_idle();
-if (currentstate==aim) update_aim();
+if (currentstate==AI_State::movement) update_movement();
+if (currentstate==AI_State::idle) update_idle();
+if (currentstate==AI_State::aim) update_aim();
 return true;
 }
 
@@ -91,7 +109,7 @@ return true;
 bool Allied_Soldier::update_idle()
 {
 extern Commander* s;
-std::map<unsigned int,Target>::iterator enemy;
+std::map<unsigned int,std::shared_ptr<Target>>::iterator enemy;
 idlecooldown+=actionspeed;
 
 //find a target after 1000 ticks.
@@ -117,8 +135,8 @@ enemy=s->enemies.begin();
 
 while (enemy!=s->enemies.end())
     {
-    targetx=enemy->second.getX();
-    targety=enemy->second.getY();
+    targetx=enemy->second->getX();
+    targety=enemy->second->getY();
 
     //x axis distance to power 2.
     targetx-=x;
@@ -138,16 +156,16 @@ while (enemy!=s->enemies.end())
     //if closer than the previous closest, set new closest enemy as current target.
     if (dist<closest)
     {
-        CurrentTarget=enemy->second.getid();
+        CurrentTarget=enemy->second->getid();
         closest=dist;
     }
 enemy++;
 }
 aimcooldown=1000;
-currentstate=aim;
+currentstate=AI_State::aim;
     enemy=s->enemies.find(CurrentTarget);
-    CurrentTargetx=enemy->second.getX();
-    CurrentTargety=enemy->second.getY();
+    CurrentTargetx=enemy->second->getX();
+    CurrentTargety=enemy->second->getY();
 }
 }
 else
@@ -155,6 +173,7 @@ else
     CurrentTargetx=x;
     CurrentTargety=y;
 }
+return true;
 }
 
 
@@ -166,14 +185,14 @@ float vx=movetox-x;
 float vy=movetoy-y;
 float vabs=sqrt(pow(vx,2)+pow(vy,2));
 //Normalise the vector, and move.
-x+=vx/vabs;
-y+=vy/vabs;
+x+=get_movementspeed()*vx/vabs;
+y+=get_movementspeed()*vy/vabs;
 //if close enough, snap to target, and become idle
-if (vabs<1)
+if (vabs<get_movementspeed())
 {
     x=movetox;
     y=movetoy;
-    currentstate=idle;
+    currentstate=AI_State::idle;
     idlecooldown=0;
 }
 
@@ -186,14 +205,23 @@ return true;
 bool Allied_Soldier::update_aim()
 {
     extern Commander* s;
-    std::map<unsigned int,Target>::iterator enemy;
+    //
+    std::map<unsigned int,std::shared_ptr<Target>>::iterator enemy;
     enemy=s->enemies.find(CurrentTarget);
 
-    if (enemy==s->enemies.end()) //make sure the current target exists. if not, go back to idle
+    //make sure the current target exists. if not, go back to idle
+    if (enemy==s->enemies.end())
         {
-        currentstate=idle;
+        currentstate=AI_State::idle;
         idlecooldown=0;
+        CurrentTargetx=x;
+        CurrentTargety=y;
+        return true;
         }
+
+    CurrentTargetx=enemy->second->getX();
+    CurrentTargety=enemy->second->getY();
+
 
     aimcooldown-=actionspeed;
     if (aimcooldown<0)
@@ -203,44 +231,28 @@ bool Allied_Soldier::update_aim()
         fire_weapon();
         aimcooldown=1000;
     }
-    enemy=s->enemies.find(CurrentTarget);
-    CurrentTargetx=enemy->second.getX();
-    CurrentTargety=enemy->second.getY();
-
+    return true;
 }
 
 bool Allied_Soldier::fire_weapon()
 {
     extern Commander* s;
-    std::map<unsigned int,Target>::iterator enemy;
+    std::map<unsigned int,std::shared_ptr<Target>>::iterator enemy;
     enemy=s->enemies.find(CurrentTarget);
-    std::cout<<"Shot fired by unit: "<<id<<" at unit "<<CurrentTarget<<" Evasion : "<< enemy->second.get_evasion() <<std::endl;
-
-    int skillresult;
-    int skilldifficulty;
-
-    skillresult=rand()%100+get_aim();
-    skilldifficulty=enemy->second.get_evasion();
-
-    if (skillresult>skilldifficulty)
-    {
-        std::cout<<"Result :" << skillresult<<" HIT"<<std::endl;
-        enemy->second.take_damage(10);
-        return true;
-    }
-    else
-    {
-        std::cout<<"Result :" << skillresult<<" MISS"<<std::endl;
-        return false;
-    }
-
+    unit_weapon->shoot(this,enemy->second);
+    return true;
 }
 
 
 bool Allied_Soldier::draw(SDL_Renderer* ren)
 {
+double angle;
 //draw this units texture.
-Base_Soldier::draw(ren);
+angle=atan2(y-CurrentTargety,x-CurrentTargetx)*180/3.14159;
+
+SDL_Rect r = {int(x)-10,int(y)-10,20,20};
+SDL_RenderCopyEx(ren,getIcon(),NULL,&r,angle,NULL,SDL_FLIP_NONE);
+//Base_Soldier::draw(ren);
 
 
 //Draw a line to the current target (should be closest)

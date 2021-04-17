@@ -1,20 +1,19 @@
 #ifndef ALLIED_SOLDIER_H
 #define ALLIED_SOLDIER_H
 #include <SDL.h>
-#include <target.h>
 #include <map>
 #include <iostream>
 #include <cmath>
 #include <stdlib.h>
 #include <float.h>
 
-#include "Base_Soldier.h"
+#include <classes.h>
 
 
 class Allied_Soldier: public Base_Soldier
 {
     public:
-        Allied_Soldier(unsigned int id,float x, float y,SDL_Renderer* ren);
+        Allied_Soldier(float x, float y,std::shared_ptr<weapon>gun=NULL);
         virtual ~Allied_Soldier();
 
         bool update();
@@ -27,7 +26,7 @@ class Allied_Soldier: public Base_Soldier
 
         bool fire_weapon();
 
-        void createIcon(SDL_Renderer* ren);
+        void createIcon();
     protected:
 
         int actionspeed;

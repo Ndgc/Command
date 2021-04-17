@@ -7,6 +7,8 @@ class State
     public:
         State();
         virtual ~State();
+        virtual bool postinit();
+
         virtual bool update();
         virtual bool event(SDL_Event E);
         virtual bool draw(SDL_Renderer* R);

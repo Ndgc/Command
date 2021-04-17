@@ -9,8 +9,10 @@ class WaveController
         virtual ~WaveController();
         bool update();
         float wave_progress();
-
+        int getwavenumber();
+        bool next_wave();
     protected:
+        int wavenumber;
         int wavethreshold;
         int wavetime;
     private:

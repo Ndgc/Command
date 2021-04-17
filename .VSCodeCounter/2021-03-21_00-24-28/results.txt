@@ -1,0 +1,66 @@
+Date : 2021-03-21 00:24:28
+Directory : e:\Users\Chris\Documents\code\Command
+Total : 37 files,  1607 codes, 170 comments, 428 blanks, all 2205 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C++      |         36 |      1,605 |        170 |        426 |      2,201 |
+| Markdown |          1 |          2 |          0 |          2 |          4 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                  | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                     |         37 |      1,607 |        170 |        428 |      2,205 |
+| include                                                               |         18 |        442 |          0 |        125 |        567 |
+| include\functions                                                     |          1 |          7 |          0 |          4 |         11 |
+| src                                                                   |         17 |      1,097 |        147 |        283 |      1,527 |
+| src\functions                                                         |          1 |         40 |          9 |          7 |         56 |
++-----------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                              | language | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| e:\Users\Chris\Documents\code\Command\Main.cpp                        | C++      |         66 |         23 |         18 |        107 |
+| e:\Users\Chris\Documents\code\Command\README.md                       | Markdown |          2 |          0 |          2 |          4 |
+| e:\Users\Chris\Documents\code\Command\include\Allied_Soldier.h        | C++      |         32 |          0 |         14 |         46 |
+| e:\Users\Chris\Documents\code\Command\include\Base_Soldier.h          | C++      |         61 |          0 |         22 |         83 |
+| e:\Users\Chris\Documents\code\Command\include\Button.h                | C++      |         31 |          0 |          9 |         40 |
+| e:\Users\Chris\Documents\code\Command\include\Classes.h               | C++      |         19 |          0 |          8 |         27 |
+| e:\Users\Chris\Documents\code\Command\include\Commander.h             | C++      |         58 |          0 |         15 |         73 |
+| e:\Users\Chris\Documents\code\Command\include\GUI.h                   | C++      |         20 |          0 |          3 |         23 |
+| e:\Users\Chris\Documents\code\Command\include\MenuButtons.h           | C++      |         34 |          0 |          6 |         40 |
+| e:\Users\Chris\Documents\code\Command\include\State.h                 | C++      |         16 |          0 |          4 |         20 |
+| e:\Users\Chris\Documents\code\Command\include\Target.h                | C++      |         18 |          0 |          6 |         24 |
+| e:\Users\Chris\Documents\code\Command\include\WaveController.h        | C++      |         18 |          0 |          4 |         22 |
+| e:\Users\Chris\Documents\code\Command\include\functions\geometry.h    | C++      |          7 |          0 |          4 |         11 |
+| e:\Users\Chris\Documents\code\Command\include\infocard.h              | C++      |         17 |          0 |          5 |         22 |
+| e:\Users\Chris\Documents\code\Command\include\particle.h              | C++      |         15 |          0 |          4 |         19 |
+| e:\Users\Chris\Documents\code\Command\include\particle_Bullet_Trail.h | C++      |         15 |          0 |          3 |         18 |
+| e:\Users\Chris\Documents\code\Command\include\shotgun.h               | C++      |         14 |          0 |          6 |         20 |
+| e:\Users\Chris\Documents\code\Command\include\timer.h                 | C++      |         17 |          0 |          4 |         21 |
+| e:\Users\Chris\Documents\code\Command\include\weapon.h                | C++      |         19 |          0 |          3 |         22 |
+| e:\Users\Chris\Documents\code\Command\include\window.h                | C++      |         31 |          0 |          5 |         36 |
+| e:\Users\Chris\Documents\code\Command\src\Allied_Soldier.cpp          | C++      |        191 |         23 |         55 |        269 |
+| e:\Users\Chris\Documents\code\Command\src\Base_Soldier.cpp            | C++      |         68 |          5 |         17 |         90 |
+| e:\Users\Chris\Documents\code\Command\src\Button.cpp                  | C++      |         59 |          4 |         16 |         79 |
+| e:\Users\Chris\Documents\code\Command\src\Commander.cpp               | C++      |        140 |         45 |         31 |        216 |
+| e:\Users\Chris\Documents\code\Command\src\GUI.cpp                     | C++      |        137 |         18 |         20 |        175 |
+| e:\Users\Chris\Documents\code\Command\src\MenuButtons.cpp             | C++      |         82 |          4 |         27 |        113 |
+| e:\Users\Chris\Documents\code\Command\src\State.cpp                   | C++      |         28 |         10 |          7 |         45 |
+| e:\Users\Chris\Documents\code\Command\src\Target.cpp                  | C++      |         59 |          5 |         18 |         82 |
+| e:\Users\Chris\Documents\code\Command\src\WaveController.cpp          | C++      |         41 |          2 |         11 |         54 |
+| e:\Users\Chris\Documents\code\Command\src\functions\Geometry.cpp      | C++      |         40 |          9 |          7 |         56 |
+| e:\Users\Chris\Documents\code\Command\src\infocard.cpp                | C++      |         68 |         10 |         16 |         94 |
+| e:\Users\Chris\Documents\code\Command\src\particle.cpp                | C++      |         17 |          3 |          4 |         24 |
+| e:\Users\Chris\Documents\code\Command\src\particle_Bullet_Trail.cpp   | C++      |         24 |          2 |          7 |         33 |
+| e:\Users\Chris\Documents\code\Command\src\shotgun.cpp                 | C++      |         66 |          3 |         22 |         91 |
+| e:\Users\Chris\Documents\code\Command\src\timer.cpp                   | C++      |         21 |          1 |          5 |         27 |
+| e:\Users\Chris\Documents\code\Command\src\weapon.cpp                  | C++      |         33 |          3 |         11 |         47 |
+| e:\Users\Chris\Documents\code\Command\src\window.cpp                  | C++      |         23 |          0 |          9 |         32 |
+| Total                                                                 |          |      1,607 |        170 |        428 |      2,205 |
++-----------------------------------------------------------------------+----------+------------+------------+------------+------------+

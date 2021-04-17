@@ -36,25 +36,46 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
-			<Add directory="E:/libraries/SDL2-2.0.4/i686-w64-mingw32/include/SDL2" />
+			<Add directory="E:/libraries/SDL2-2.0.12/i686-w64-mingw32/include/SDL2" />
+			<Add directory="E:/libraries/SDL2_ttf-2.0.15/i686-w64-mingw32/include/SDL2" />
 		</Compiler>
 		<Linker>
-			<Add option="-lmingw32 -lSDL2main -lSDL2" />
-			<Add directory="E:/libraries/SDL2-2.0.4/i686-w64-mingw32/lib" />
+			<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf" />
+			<Add directory="E:/libraries/SDL2-2.0.12/i686-w64-mingw32/lib" />
+			<Add directory="E:/libraries/SDL2_ttf-2.0.15/i686-w64-mingw32/lib" />
 		</Linker>
 		<Unit filename="Main.cpp" />
+		<Unit filename="include/Allied_Soldier.h" />
+		<Unit filename="include/Base_Soldier.h" />
+		<Unit filename="include/Button.h" />
+		<Unit filename="include/Classes.h" />
 		<Unit filename="include/Commander.h" />
-		<Unit filename="include/Soldier.h" />
+		<Unit filename="include/GUI.h" />
+		<Unit filename="include/MenuButtons.h" />
 		<Unit filename="include/State.h" />
 		<Unit filename="include/Target.h" />
-		<Unit filename="include/shape.h" />
+		<Unit filename="include/WaveController.h" />
+		<Unit filename="include/functions/geometry.h" />
+		<Unit filename="include/particle.h" />
+		<Unit filename="include/particle_Bullet_Trail.h" />
+		<Unit filename="include/shotgun.h" />
 		<Unit filename="include/timer.h" />
+		<Unit filename="include/weapon.h" />
+		<Unit filename="src/Allied_Soldier.cpp" />
+		<Unit filename="src/Base_Soldier.cpp" />
+		<Unit filename="src/Button.cpp" />
 		<Unit filename="src/Commander.cpp" />
-		<Unit filename="src/Soldier.cpp" />
+		<Unit filename="src/GUI.cpp" />
+		<Unit filename="src/MenuButtons.cpp" />
 		<Unit filename="src/State.cpp" />
 		<Unit filename="src/Target.cpp" />
-		<Unit filename="src/shape.cpp" />
+		<Unit filename="src/WaveController.cpp" />
+		<Unit filename="src/functions/Geometry.cpp" />
+		<Unit filename="src/particle.cpp" />
+		<Unit filename="src/particle_Bullet_Trail.cpp" />
+		<Unit filename="src/shotgun.cpp" />
 		<Unit filename="src/timer.cpp" />
+		<Unit filename="src/weapon.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
